@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Executor | Premium Roblox Script Executor</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #0a0a2a;
+            --accent-color: #8A2BE2;
+            --text-color: #f8f8ff;
+            --background: #05051a;
+            --secondary-accent: #4169E1;
+            --error-color: #ff4757;
+            --success-color: #2ed573;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--background);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .logo-star {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        nav li {
+            margin-left: clamp(0.5rem, 2vw, 2rem);
+        }
+        
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .auth-btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            flex-shrink: 0;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+        }
+        
+        .login-btn:hover {
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+        
+        .signup-btn {
+            background-color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            color: white;
+        }
+        
+        .signup-btn:hover {
+            background-color: #7525b8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            background: linear-gradient(to bottom, rgba(10, 10, 42, 0.5), rgba(5, 5, 26, 0.9)), url('/api/placeholder/1200/800') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, rgba(10, 10, 42, 0.8) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            padding: 0 1rem;
+        }
+        
+        .hero-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        
+        .hero-btn:hover {
+            background-color: #7525b8;
+            transform: translateY(-3px);
+        }
+        
+        .hero-btn.secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .hero-btn.secondary:hover {
+            background-color: rgba(138, 43, 226, 0.2);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(138, 43, 226, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Scripts Section */
+        .scripts {
+            padding: 5rem 5%;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .script-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .script-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .script-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .script-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .script-info {
+            padding: 1.5rem;
+        }
+        
+        .script-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .script-info p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        .script-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .script-tag {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: var(--accent-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 5%;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid var(--accent-color);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 1rem;
+            right: -4rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 4rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .pricing-plan {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .pricing-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-duration {
+            display: block;
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-top: -0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-btn:hover {
+            background-color: #7525b8;
+            transform: translateY(-3px);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* User Dashboard Styles */
+        .dashboard {
+            padding: 5rem 5%;
+            min-height: 80vh;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dashboard-title {
+            font-size: 2.5rem;
+        }
+        
+        .dashboard-welcome {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        .dashboard-sidebar {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .sidebar-nav {
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: var(--accent-color);
+        }
+        
+        .sidebar-nav-icon {
+            margin-right: 0.8rem;
+        }
+        
+        .dashboard-main {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+        
+        .profile-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-family: var(--font-main);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-button {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-button:hover {
+            background-color: #7525b8;
+        }
+        
+        .submission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .submission-table th, .submission-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .submission-table th {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .submission-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+        
+        .status-resolved {
+            background-color: rgba(46, 213, 115, 0.2);
+            color: #2ED573;
+        }
+        
+        .status-in-progress {
+            background-color: rgba(30, 144, 255, 0.2);
+            color: #1E90FF;
+        }
+        
+        .view-button {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: var(--accent-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .view-button:hover {
+            background-color: rgba(138, 43, 226, 0.4);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            opacity: 1;
+        }
+        
+        .modal-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-subtitle {
+            opacity: 0.7;
+            font-size: 1rem;
+        }
+        
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .alert-error {
+            background-color: rgba(255, 71, 87, 0.2);
+            color: var(--error-color);
+        }
+        
+        .alert-success {
+            background-color: rgba(46, 213, 115, 0.2);
+            color: var(--success-color);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+        }
+        
+        .contact-content {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-details {
+            margin-top: 2rem;
+        }
+        
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            background-color: var(--primary-color);
+            margin-top: 5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                margin-top: 1rem;
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+            
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <a href="index.html" class="logo">
+            <span class="logo-star">✦</span> Galaxy
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#scripts">Scripts</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Support</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons">
+            <a href="#" class="auth-btn login-btn" onclick="openModal('loginModal')">Login</a>
+            <a href="#" class="auth-btn signup-btn" onclick="openModal('signupModal')">Sign Up</a>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Galaxy Executor</h1>
+            <p>The most powerful and reliable Roblox script executor with unmatched execution capabilities and script support.</p>
+            <div>
+                <a href="#pricing" class="hero-btn">Download Now</a>
+                <a href="#features" class="hero-btn secondary">View Features</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Powerful Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Level 7 Execution</h3>
+                <p>Execute any script with our advanced Level 7 execution engine that supports all Roblox games.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Anti-Detection</h3>
+                <p>Our advanced bypass system ensures you won't get detected or banned while using Galaxy Executor.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3>Script Hub</h3>
+                <p>Access our extensive library of premium scripts for all popular Roblox games at your fingertips.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Custom Functions</h3>
+                <p>Create and save your own custom functions and script templates for faster execution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Support</h3>
+                <p>Use Galaxy Executor on your mobile device with our dedicated Android and iOS applications.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Auto-Update</h3>
+                <p>Never worry about Roblox updates breaking your executor - Galaxy updates automatically.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Scripts Section -->
+    <section class="scripts" id="scripts">
+        <h2 class="section-title">Featured Scripts</h2>
+        <div class="script-grid">
+            <div class="script-card">
+                <img src="/api/placeholder/400/300" alt="Script 1" class="script-img">
+                <div class="script-info">
+                    <h3>Infinite Yield</h3>
+                    <p>Admin commands script with powerful features for any Roblox game.</p>
+                    <div class="script-tags">
+                        <span class="script-tag">Admin</span>
+                        <span class="script-tag">Universal</span>
+                    </div>
+                </div>
+            </div>
+            <div class="script-card">
+                <img src="/api/placeholder/400/300" alt="Script 2" class="script-img">
+                <div class="script-info">
+                    <h3>Blox Fruits Hub</h3>
+                    <p>Complete script hub for Blox Fruits with auto-farm, ESP, and more.</p>
+                    <div class="script-tags">
+                        <span class="script-tag">Blox Fruits</span>
+                        <span class="script-tag">Auto Farm</span>
+                    </div>
+                </div>
+            </div>
+            <div class="script-card">
+                <img src="/api/placeholder/400/300" alt="Script 3" class="script-img">
+                <div class="script-info">
+                    <h3>Phantom Forces Aimbot</h3>
+                    <p>Advanced aimbot and ESP for Phantom Forces with customizable settings.</p>
+                    <div class="script-tags">
+                        <span class="script-tag">Phantom Forces</span>
+                        <span class="script-tag">Aimbot</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Login to Galaxy</h2>
+                <p class="modal-subtitle">Access your dashboard and premium features</p>
+            </div>
+            <div id="loginAlert" class="alert" style="display: none;"></div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="form-label">Email</label>
+                        <input type="email" id="loginEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" id="loginPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group" style="text-align: right;">
+                        <a href="#" style="color: var(--accent-color); text-decoration: none; font-size: 0.9rem;">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="form-button" onclick="simulateLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('signupModal')">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Create Account</h2>
+                <p class="modal-subtitle">Join the Galaxy community</p>
+            </div>
+            <div id="signupAlert" class="alert" style="display: none;"></div>
+            <div class="modal-body">
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signupUsername" class="form-label">Username</label>
+                        <input type="text" id="signupUsername" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail" class="form-label">Email</label>
+                        <input type="email" id="signupEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword" class="form-label">Password</label>
+                        <input type="password" id="signupPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" id="signupConfirmPassword" class="form-input" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="form-button" onclick="simulateSignup()">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Login functionality
+        function simulateLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const alertBox = document.getElementById('loginAlert');
+            
+            // Simple validation
+            if (!email || !password) {
+                showAlert(alertBox, 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            // Simulate successful login (in a real app, you'd make an API call here)
+            showAlert(alertBox, 'Login successful! Redirecting...', 'success');
+            
+            // For demo purposes, we'll redirect after a delay
+            setTimeout(() => {
+                closeModal('loginModal');
+                // Redirect to dashboard or update UI for logged-in user
+                updateUIForLoggedInUser(email);
+            }, 1500);
+        }
+        
+        // Signup functionality
+        function simulateSignup() {
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const alertBox = document.getElementById('signupAlert');
+            
+            // Validation
+            if (!username || !email || !password || !confirmPassword) {
+                showAlert(alertBox, 'Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert(alertBox, 'Passwords do not match', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAlert(alertBox, 'Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            // Simulate successful signup
+            showAlert(alertBox, 'Account created successfully!', 'success');
+            
+            // For demo purposes, we'll close the modal after a delay
+            setTimeout(() => {
+                closeModal('signupModal');
+            }, 1500);
+        }
+        
+        // Helper function to show alerts
+        function showAlert(element, message, type) {
+            element.textContent = message;
+            element.className = `alert alert-${type}`;
+            element.style.display = 'block';
+            
+            // Hide alert after 5 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Update UI for logged in user
+        function updateUIForLoggedInUser(email) {
+            const authButtons = document.querySelector('.auth-buttons');
+            authButtons.innerHTML = `
+                <a href="dashboard.html" class="auth-btn login-btn">Dashboard</a>
+                <a href="#" class="auth-btn signup-btn" onclick="logout()">Logout</a>
+            `;
+            
+            // You could also store the login state in localStorage
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userEmail', email);
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            
+            const authButtons = document.querySelector('.auth-buttons');
+            authButtons.innerHTML = `
+                <a href="#" class="auth-btn login-btn" onclick="openModal('loginModal')">Login</a>
+                <a href="#" class="auth-btn signup-btn" onclick="openModal('signupModal')">Sign Up</a>
+            `;
+        }
+        
+        // Check login state on page load
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn')) {
+                const email = localStorage.getItem('userEmail');
+                updateUIForLoggedInUser(email);
+            }
+        };
+    </script>
+</body>
+</html>
